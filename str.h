@@ -1,4 +1,4 @@
-#ifndef STR_Z 
+#ifndef STR_Z
 #define STR_Z
 
 #include <stdlib.h>
@@ -49,10 +49,18 @@ char* strrealloc(string* s)
 	return newdata;
 }
 
-void append(string* s, char c)
+void strappend(string* s, char* c)
 {
 	char* data = (strlen(s->data)+1 != sizeof(s)) ? s->data : strrealloc(s);
-	data[s->len++] = c;
+	data[s->len++] = *c;
 	data[s->len] = '\0';
+}
+
+string* strjoin(string* s, char* c)
+{
+	string* result = createString(NULL);
+	result->data = strcat(s->data, c);
+
+	return result;
 }
 #endif
