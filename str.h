@@ -1,6 +1,7 @@
 #ifndef STR_Z
 #define STR_Z
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -11,7 +12,7 @@ typedef struct string
 	char* data;
 } string;
 
-string* createString(const char* str)
+string* str_create(const char* str)
 {
 	string* s = malloc(sizeof(string));
 
@@ -30,12 +31,12 @@ string* createString(const char* str)
 	return s;
 }
 
-char* getStrData(const string* s)
+char* str_get_data(const string* s)
 {
 	return s->data;
 }
 
-char* strrealloc(string* s)
+char* str_realloc(string* s)
 {
 	s->capacity *= 2;
 	char* newdata = (char*)malloc(s->capacity);
@@ -49,28 +50,29 @@ char* strrealloc(string* s)
 	return newdata;
 }
 
-void strpush_back(string* s, char c)
+void str_push_back(string* s, char c)
 {
-	char* data = (strlen(s->data)+1 != sizeof(s)) ? s->data : strrealloc(s);
+	char* data = (strlen(s->data)+1 != sizeof(s)) ? s->data : str_realloc(s);
 	data[s->len++] = c;
 	data[s->len] = '\0';
 }
 
-string* strjoin(const string* s, char* c)
+string* str_join(const string* s, char* c)
 {
-	string* result = createString(NULL);
+	string* result = str_create(NULL);
 	result->data = strcat(s->data, c);
 
 	return result;
 }
 
-string* strinput(string* s)
+string* str_input()
 {
 	char i;
+	string* s = str_create(NULL);
 	while(i!='\n')
 	{
 		i=getchar();
-		strpush_back(s, i);
+		str_push_back(s, i);
 	}
 	return s;
 }
