@@ -5,75 +5,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct string
+struct string
 {
 	size_t capacity;
 	size_t len;
 	char* data;
-} string;
+};
+typedef struct string string;
 
-string* str_create(const char* str)
-{
-	string* s = malloc(sizeof(string));
+string* str_create(const char* str);
 
-	size_t strLength = 0;
+char* str_get_data(const string* s);
 
-	if (str!=NULL)
-	{
-		size_t strLength = strlen(str);
-		memcpy(s->data, str, strLength);
-	}
-	s->capacity = strLength + 1;
-	s->data = (char*)malloc(s->capacity);
-	s->data[strLength] = '\0';
-	s->len = 0;
+void str_push_back(string* s, char c);
 
-	return s;
-}
+string* str_join(const string* s, char* c);
 
-char* str_get_data(const string* s)
-{
-	return s->data;
-}
+string* str_input();
 
-char* str_realloc(string* s)
-{
-	s->capacity *= 2;
-	char* newdata = (char*)malloc(s->capacity);
-	memcpy(newdata, s->data, s->len);
-	if(s->data != NULL)
-	{
-		free(s->data);
-	}
-	s->data = newdata;
+void str_destroy(string* s);
 
-	return newdata;
-}
-
-void str_push_back(string* s, char c)
-{
-	char* data = (strlen(s->data)+1 != sizeof(s)) ? s->data : str_realloc(s);
-	data[s->len++] = c;
-	data[s->len] = '\0';
-}
-
-string* str_join(const string* s, char* c)
-{
-	string* result = str_create(NULL);
-	result->data = strcat(s->data, c);
-
-	return result;
-}
-
-string* str_input()
-{
-	char i;
-	string* s = str_create(NULL);
-	while(i!='\n')
-	{
-		i=getchar();
-		str_push_back(s, i);
-	}
-	return s;
-}
 #endif
