@@ -6,7 +6,7 @@
 
 typedef struct string
 {
-	size_t alloc;
+	size_t capacity;
 	size_t len;
 	char* data;
 } string;
@@ -22,23 +22,23 @@ string* createString(const char* str)
 		size_t strLength = strlen(str);
 		memcpy(s->data, str, strLength);
 	}
-	s->alloc = strLength + 1;
-	s->data = (char*)malloc(s->alloc);
+	s->capacity = strLength + 1;
+	s->data = (char*)malloc(s->capacity);
 	s->data[strLength] = '\0';
 	s->len = 0;
 
 	return s;
 }
 
-char* getStrData(string* s)
+char* getStrData(const string* s)
 {
 	return s->data;
 }
 
 char* strrealloc(string* s)
 {
-	s->alloc *= 2;
-	char* newdata = (char*)malloc(s->alloc);
+	s->capacity *= 2;
+	char* newdata = (char*)malloc(s->capacity);
 	memcpy(newdata, s->data, s->len);
 	if(s->data != NULL)
 	{
@@ -49,18 +49,29 @@ char* strrealloc(string* s)
 	return newdata;
 }
 
-void strappend(string* s, char* c)
+void strpush_back(string* s, char c)
 {
 	char* data = (strlen(s->data)+1 != sizeof(s)) ? s->data : strrealloc(s);
-	data[s->len++] = *c;
+	data[s->len++] = c;
 	data[s->len] = '\0';
 }
 
-string* strjoin(string* s, char* c)
+string* strjoin(const string* s, char* c)
 {
 	string* result = createString(NULL);
 	result->data = strcat(s->data, c);
 
 	return result;
+}
+
+string* strinput(string* s)
+{
+	char i;
+	while(i!='\n')
+	{
+		i=getchar();
+		strpush_back(s, i);
+	}
+	return s;
 }
 #endif
