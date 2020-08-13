@@ -25,4 +25,6 @@ string* str_input();
 
 void str_destroy(string* s);
 
+//char str_get_element(const string* s, const size_t i);
+
 #endif
