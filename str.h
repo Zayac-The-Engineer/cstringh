@@ -19,7 +19,7 @@ char* str_get_data(const string* s);
 
 void str_push_back(string* s, char c);
 
-string* str_join(const string* s, char* c);
+string* str_join(const string* s, const char* c);
 
 string* str_input();
 

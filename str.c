@@ -14,7 +14,7 @@ string* str_create(const char* str)
 	s->capacity = strLength + 1;
 	s->data = (char*)malloc(s->capacity);
 	s->data[strLength] = '\0';
-	s->len = s->capacity-1;
+	s->len = strLength;
 
 	return s;
 }
@@ -43,10 +43,11 @@ void str_push_back(string* s, char c)
 	data[s->len] = '\0';
 }
 
-string* str_join(const string* s, char* c)
+string* str_join(const string* s, const char* c)
 {
 	string* result = str_create(NULL);
 	result->data = strcat(s->data, c);
+	result->len = strlen(result->data);
 
 	return result;
 }
