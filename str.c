@@ -25,16 +25,6 @@ void str_destroy(string* s)
 	free(s);
 }
 
-char* str_get_data(const string* s)
-{
-	return s->data;
-}
-/*
-char str_get_element(const string* s, const size_t i)
-{
-	return s->data[i];
-}
-*/
 void str_push_back(string* s, char c)
 {
 	char* data = (s->len+1 != s->capacity) ? s->data : realloc(s->data, s->capacity*2);
